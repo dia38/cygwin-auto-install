@@ -9,33 +9,59 @@ REM -- 64-bit URL: https://www.cygwin.com/setup-x86_64.exe
 SETLOCAL
 
 REM -- Get OS version and Architecture type to select correct installer
-for /f "tokens=4-5 delims=. " %%i in ('ver') do set VERSION=%%i.%%j
+
+REM for /f "tokens=4-5 delims=. " %%i in ('ver') do SET VERSION=%%i.%%j
+for /f "tokens=4-5 delims=. " %%i in ('ver') do SET CURRVERSION=%%i
+SET /A VERSION=%CURRVERSION%
+SET /A COMPARE=6
 
 REM -- os = 0 for XP/2003  os = 1 for Vista and newer
-if "%version%" GEQ "6.0" ( SET OSVERSION=1 ) else ( SET OSVERSION=0 )
+
+if %VERSION% GEQ %COMPARE% ( SET /A OSVERSION=1 ) else ( SET /A OSVERSION=0 )
+
+
+
+ECHO Version returned %VERSION%, Comparison is %COMPARE%
 
 REM -- following doesn't account for 'independent' arch
-if /i %processor_architecture% == "AMD64" ( SET PROCESSOR=64 ) else ( SET PROCESSOR=32 )
+
+if /i "%processor_architecture%" == "AMD64" ( SET /A PROCESSOR=64 ) else ( SET /A PROCESSOR=32 )
+
+
+ECHO %processor_architecture% and %PROCESSOR% and OS Ver %OSVERSION%
 
 REM -- there are no 64bit builds for the older Cygwin versions
-if OSVERSION == 0 SET INSTALLER=setup.exe
+
+if %OSVERSION% == 0 SET INSTALLER=setup.exe
+
+if %OSVERSION% == 1 ECHO OS is 6.0 or greater
+if %PROCESSOR% == 64 ECHO Arch is 64bit
 
 REM -- for 32bit builds of 2.6.x or newer
+
 if %OSVERSION% == 1 (
-	 if %PROCESSOR% == 32 (
-		 SET INSTALLER=setup-x86.exe 
-			      ) 
-	   	)
+		if %PROCESSOR% == 32 (
+		 SET INSTALLER=setup-x86.exe
+			      ) 	   	
+		)
 
 REM -- for 64bit builds of 2.6.x or newer
+
 if %OSVERSION% == 1 (
-	 if %PROCESSOR% == 32 (
-		 SET INSTALLER=setup-x86_64.exe 
-			      ) 
+	 if %PROCESSOR% == 64 (
+		 SET INSTALLER=setup-x86_64.exe
+			      )
 	   	)
  
+
+
 REM -- Change to the directory of the executing batch file
+
 CD %~dp0
+ 
+
+ECHO "%~dp0"
+ECHO Installer is %INSTALLER%
  
 REM -- Configure our paths
 SET SITE=http://cygwin.mirrors.pair.com/
