@@ -2,6 +2,9 @@
 REM -- Automates cygwin installation
 REM -- Source: https://github.com/rotor-head/auto-cygwin-install
 REM -- Based on: https://gist.github.com/wjrogers/1016065 and https://github.com/rtwolf/auto-cygwin-install
+REM --
+REM -- 32-bit URL: https://www.cygwin.com/setup-x86.exe
+REM -- 64-bit URL: https://www.cygwin.com/setup-x86_64.exe
  
 SETLOCAL
  
