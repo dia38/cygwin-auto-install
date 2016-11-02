@@ -10,8 +10,12 @@ SETLOCAL
 
 REM -- Get OS version and Architecture type to select correct installer
 for /f "tokens=4-5 delims=. " %%i in ('ver') do set VERSION=%%i.%%j
-if "%version%" GEQ "6.0" ( SET OSVERSION=1 ) else ( SET OSVERSION=0 )  REM os = 0 for XP/2003  os = 1 for Vista and newer
-if /i %processor_architecture% == "AMD64" ( SET PROCESSOR=64 ) else ( SET PROCESSOR=32 ) REM doesn't account for 'independent' arch
+
+REM -- os = 0 for XP/2003  os = 1 for Vista and newer
+if "%version%" GEQ "6.0" ( SET OSVERSION=1 ) else ( SET OSVERSION=0 )
+
+REM -- following doesn't account for 'independent' arch
+if /i %processor_architecture% == "AMD64" ( SET PROCESSOR=64 ) else ( SET PROCESSOR=32 )
 
 REM -- there are no 64bit builds for the older Cygwin versions
 if OSVERSION == 0 SET INSTALLER=setup.exe
