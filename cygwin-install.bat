@@ -93,11 +93,15 @@ set PATH=%ROOTDIR%/bin;%PATH%
 REM -- %ROOTDIR%/bin/bash.exe -c 'svn --force export https://github.com/transcode-open/apt-cyg /bin/'
 REM -- ^                            ^
 REM -- | removed ref to google code |
-REM --   added ref to transcode here 
-%ROOTDIR%/bin/bash.exe -c 'lynx -source rawgit.com/transcode-open/apt-cyg/master/apt-cyg > apt-cyg'
-%ROOTDIR%/bin/bash.exe -c 'install apt-cyg /bin'
-%ROOTDIR%/bin/bash.exe -c 'chmod +x /bin/apt-cyg'
-ECHO apt-cyg installed if it says something like "A    /bin" and "A   /bin/apt-cyg" and "Exported revision 18" or some other number.
+REM --   added ref to transcode here
+REM -- 
+REM -- Pull and install
+%ROOTDIR%/bin/bash.exe -c 'lynx -source rawgit.com/transcode-open/apt-cyg/master/apt-cyg > %ROOTDIR%/apt-cyg
+%ROOTDIR%/bin/bash.exe -c 'chmod +x %ROOTDIR%/apt-cyg'
+%ROOTDIR%/bin/bash.exe -c 'install %ROOTDIR%/apt-cyg %ROOTDIR%/bin'
+
+REM -- Verify version info
+%ROOTDIR%/bin/bash.exe -c 'apt-cyg --version'
 
 ENDLOCAL
  
