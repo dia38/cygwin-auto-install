@@ -69,7 +69,7 @@ SET LOCALDIR=%CD%
 SET ROOTDIR=C:/cygwin
  
 REM -- These are the packages we will install (in addition to the default packages)
-SET PACKAGES=bash,mintty,wget,rsync,curl,vim,lynx,tar,gawk,bzip2,subversion
+SET PACKAGES=bash,mintty,wget,rsync,curl,vim,lynx,tar,gawk,bzip2,subversion,openssh
  
 REM -- Do it!
 ECHO *** INSTALLING DEFAULT PACKAGES
