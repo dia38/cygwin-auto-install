@@ -16,6 +16,9 @@ The current setup files as of this writing for Vista or greater OS is 2.6.0 for 
 
 
 Mods based off these authors efforts.
+
 Created by wjrogers: https://gist.github.com/wjrogers/1016065.
+
 Suggest this workflow for this project: http://scottchacon.com/2011/08/31/github-flow.html
+
 apt-cyg rtwolf https://github.com/rtwolf/cygwin-auto-install/
