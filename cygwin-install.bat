@@ -69,24 +69,28 @@ SET LOCALDIR=%CD%
 SET ROOTDIR=C:/cygwin
  
 REM -- These are the packages we will install (in addition to the default packages)
-SET PACKAGES=bash,mintty,wget,rsync,curl,vim,lynx
-REM -- These are necessary for apt-cyg install, do not change. Any duplicates will be ignored.
-SET PACKAGES=%PACKAGES%,wget,tar,gawk,bzip2,subversion
+SET PACKAGES=bash,mintty,wget,rsync,curl,vim,lynx,tar,gawk,bzip2,subversion
  
 REM -- Do it!
 ECHO *** INSTALLING DEFAULT PACKAGES
 %INSTALLER% --quiet-mode --no-desktop --download --local-install --no-verify -s %SITE% -l "%LOCALDIR%" -R "%ROOTDIR%"
+
+REM -- MODIFY BELOW TO SUITE AND ADD apt-cyg
+REM -- These are necessary for apt-cyg install, do not change. Any duplicates will be ignored.
+REM -- SET PACKAGES=%PACKAGES%,wget,tar,gawk,bzip2,subversion
 ECHO.
 ECHO.
-ECHO *** INSTALLING CUSTOM PACKAGES
-%INSTALLER% -q -d -D -L -X -s %SITE% -l "%LOCALDIR%" -R "%ROOTDIR%" -P %PACKAGES%
- 
+REM -- ECHO *** INSTALLING CUSTOM PACKAGES
+REM -- %INSTALLER% -q -d -D -L -X -s %SITE% -l "%LOCALDIR%" -R "%ROOTDIR%" -P %PACKAGES%
+REM -- 
+
 REM -- Show what we did
 ECHO.
 ECHO.
 ECHO cygwin installation updated
 ECHO  - %PACKAGES%
 ECHO.
+
 
 ECHO apt-cyg installing.
 set PATH=%ROOTDIR%/bin;%PATH%
