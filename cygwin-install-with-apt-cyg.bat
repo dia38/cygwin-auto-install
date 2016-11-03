@@ -10,8 +10,11 @@ SETLOCAL
 
 REM -- Get OS version and Architecture type to select correct installer
 
-REM for /f "tokens=4-5 delims=. " %%i in ('ver') do SET VERSION=%%i.%%j
+REM -- use 1st for loop if you need sub build numbers.  
+REM for /f "tokens=4-5 delims=. " %%i in ('ver') do SET CURRVERSION=%%i.%%j
 for /f "tokens=4-5 delims=. " %%i in ('ver') do SET CURRVERSION=%%i
+
+REM -- SET /A gives numeric values for accurate compare - script will break without the flag
 SET /A VERSION=%CURRVERSION%
 SET /A COMPARE=6
 
@@ -20,13 +23,11 @@ REM -- os = 0 for XP/2003  os = 1 for Vista and newer
 if %VERSION% GEQ %COMPARE% ( SET /A OSVERSION=1 ) else ( SET /A OSVERSION=0 )
 
 
-
 ECHO Version returned %VERSION%, Comparison is %COMPARE%
 
 REM -- following doesn't account for 'independent' arch
 
 if /i "%processor_architecture%" == "AMD64" ( SET /A PROCESSOR=64 ) else ( SET /A PROCESSOR=32 )
-
 
 ECHO %processor_architecture% and %PROCESSOR% and OS Ver %OSVERSION%
 
@@ -53,12 +54,9 @@ if %OSVERSION% == 1 (
 			      )
 	   	)
  
-
-
 REM -- Change to the directory of the executing batch file
 
 CD %~dp0
- 
 
 ECHO "%~dp0"
 ECHO Installer is %INSTALLER%
@@ -69,20 +67,17 @@ SET LOCALDIR=%CD%
 SET ROOTDIR=C:/cygwin
  
 REM -- These are the packages we will install (in addition to the default packages)
+REM -- MODIFY BELOW TO SUITE AND ADD apt-cyg
+REM -- These are necessary for apt-cyg install, Add or adjust to suite needs beyond base. Any duplicates will be ignored.
+REM -- SET PACKAGES=%PACKAGES%,wget,tar,gawk,bzip2,subversion
+
 SET PACKAGES=bash,mintty,wget,rsync,curl,vim,lynx,tar,gawk,bzip2,subversion,openssh
  
 REM -- Do it!
 ECHO *** INSTALLING DEFAULT PACKAGES
 %INSTALLER% --quiet-mode --no-desktop --download --local-install --no-verify -s %SITE% -l "%LOCALDIR%" -R "%ROOTDIR%"
-
-REM -- MODIFY BELOW TO SUITE AND ADD apt-cyg
-REM -- These are necessary for apt-cyg install, do not change. Any duplicates will be ignored.
-REM -- SET PACKAGES=%PACKAGES%,wget,tar,gawk,bzip2,subversion
 ECHO.
 ECHO.
-REM -- ECHO *** INSTALLING CUSTOM PACKAGES
-REM -- %INSTALLER% -q -d -D -L -X -s %SITE% -l "%LOCALDIR%" -R "%ROOTDIR%" -P %PACKAGES%
-REM -- 
 
 REM -- Show what we did
 ECHO.
@@ -94,10 +89,10 @@ ECHO.
 
 ECHO apt-cyg installing.
 set PATH=%ROOTDIR%/bin;%PATH%
-REM -- %ROOTDIR%/bin/bash.exe -c 'svn --force export https://github.com/transcode-open/apt-cyg /bin/'
+%ROOTDIR%/bin/bash.exe -c 'svn --force export https://github.com/transcode-open/apt-cyg /bin/'
 REM -- ^                            ^
 REM -- | removed ref to google code |
-REM --   added ref to transcode here
+REM --   added ref to transcode
 REM -- 
 REM -- Pull and install
 %ROOTDIR%/bin/bash.exe -c 'lynx -source rawgit.com/transcode-open/apt-cyg/master/apt-cyg > %ROOTDIR%/apt-cyg
