@@ -82,18 +82,17 @@ SET PACKAGES=bash,mintty,wget,rsync,curl,vim,lynx,tar,gawk,bzip2,subversion,open
  
 REM -- Do it!
 ECHO *** INSTALLING DEFAULT PACKAGES
-%INSTALLER% --quiet-mode --no-desktop --download --local-install --no-verify -s %SITE% -l "%LOCALDIR%" -R "%ROOTDIR%"
+%INSTALLER% --quiet-mode --no-desktop --download --local-install --no-verify -s %SITE% -l "%LOCALDIR%" -R "%ROOTDIR%" -P "%PACKAGES%"
 ECHO.
 ECHO.
 
 REM -- Show what we did
 ECHO.
 ECHO.
-ECHO cygwin installation updated
+ECHO cygwin installation updated with the following packages:
 ECHO  - %PACKAGES%
 ECHO.
 
-%ROOTDIR%/bin/bash.exe -c 'apt-cyg --version'
 
 ENDLOCAL
  
